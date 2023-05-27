@@ -1,20 +1,57 @@
 /* styles.css */
 
 /* Global styles */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@100&display=swap');@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
   font-family: Arial, sans-serif;
 }
 
-/* Header styles */
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
+#background {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+}
+
+#C1 {
+  grid-column: 1;
+  min-width: 20%;
+}
+
+#C2 {
+  grid-column: 2;
+  
+}
+
+#C3 {
+  grid-column: 3;
+  min-width: 20%;
+}
+
+@media screen and (max-width: 200%) {
+  body {
+    zoom: 1;
+    transform: scale(2);
+    transform-origin: top left;
+  }
+}
+
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* Main styles */
+
 main {
   display: flex;
   flex-direction: column;
@@ -23,14 +60,54 @@ main {
   height: 100vh;
 }
 
-section {
-  margin-bottom: 20px;
+#timeContainer {
+  font-family: 'Oswald', sans-serif;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-content: center;
+  white-space: nowrap;
+  align-items: center;
+  height: 100vh;
 }
 
-/* Footer styles */
-footer {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
+#timeDisplay {
+  font-size: 100px;
+  width: 215px;
   text-align: center;
+  overflow: hidden;
 }
+
+#greetingMessage {
+  display: inline-block;
+  border-top: 2px solid #CCCCCC;
+  padding-bottom: 0px; 
+  text-align: center;
+  font-size: 38px;
+  padding-top: 10px;
+  height: 10px; 
+}
+
+
+
+#quote {
+  font-family: 'Oswald', sans-serif;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: justify;
+  text-align: justify;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 24px;
+  padding: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+
+/* Footer styles */

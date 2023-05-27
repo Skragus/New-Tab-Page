@@ -7,31 +7,39 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Your HTML content goes here -->
-  <header>
-    <!-- Header content, e.g., logo, title -->
-  </header>
-  <main>
-    <!-- Main content of the new tab page -->
-    <section>
-      <!-- Section for displaying the daily background image -->
-    </section>
-    <section>
-      <!-- Section for displaying weather updates -->
-    </section>
-    <section>
-      <!-- Section for displaying market prices -->
-    </section>
-    <section>
-      <!-- Section for the notepad feature -->
-    </section>
-    <section>
-      <!-- Section for bookmarking capabilities -->
-    </section>
+  <main id="background" style="background-image: url(${})">
+    <div id = "C1"> <!-- C1 -->
+      <div><!-- R1 -->
+        <!--market prices -->
+      </div>
+      <div><!-- R2 -->
+        <!--notepad feature -->
+      </div>
+    </div>
+    <div id="C2"><!-- C2 -->
+      <div>
+        <!-- Empty for now -->
+      </div>
+      <div id="timeContainer">
+        <div id="timeDisplay" class="no-select"><!-- Time -->
+        </div>
+        <div id="greetingMessage" class="no-select"><!-- Time and message -->
+
+        </div>
+      </div>
+      <div id="quote">
+          loading...
+      </div>
+    </div>
+    <div id = "C1"><!-- C3 -->
+      <div>
+        <!-- Date and weather -->
+      </div>
+      <div>
+        <!--bookmarking capabilities -->
+      </div>
+    </div>
   </main>
-  <footer>
-    <!-- Footer content, e.g., attribution, links -->
-  </footer>
   <!-- Add any JavaScript files or scripts here -->
   <script src="script.js"></script>
 </body>

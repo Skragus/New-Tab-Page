@@ -19,29 +19,30 @@ const getBackground = () => {
     .then(json => {
       // Extract the image URL from the API response
       const imageUrl = json.url;
-
       // Set the background image URL and styling
       backgroundDiv.style.backgroundImage = `url('${imageUrl}')`;
       backgroundDiv.style.backgroundSize = 'cover';
       backgroundDiv.style.backgroundPosition = 'center';
-      backgroundDiv.style.opacity = '0';
-      backgroundDiv.offsetHeight;
-      backgroundDiv.style.transition = 'opacity 0.5s';
-
-      // Trigger reflow to ensure transition is applied
-
-      // Apply fade-in effect by transitioning opacity
-      backgroundDiv.style.opacity = '1';
-      backgroundDiv.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 1)';
-      //quote.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 1)';
+      applyFadeInEffect()
     })
     .catch(error => {
       console.error(error);
       // Set a fallback background image URL and styling
-      backgroundDiv.style.backgroundImage = "url('https://mcdn.wallpapersafari.com/medium/26/24/C0UB8w.jpg')";
+      backgroundDiv.style.backgroundImage = "url('https://wallpapercave.com/wp/wp3435425.jpg')";
       backgroundDiv.style.backgroundSize = 'cover';
-      backgroundDiv.style.backgroundPosition = 'center';
+      applyFadeInEffect()
+
     });
+};
+
+const applyFadeInEffect = () => {
+  backgroundDiv.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 1)';
+  backgroundDiv.style.opacity = '0';
+  backgroundDiv.offsetHeight;
+  backgroundDiv.style.transition = 'opacity 0.5s';
+  backgroundDiv.style.opacity = '1';
+  const background = document.getElementById('background');
+  background.classList.add('show-fade');
 };
 
 // Call the function to fetch and set the initial background image
@@ -105,27 +106,28 @@ setInterval(updateTime, 1000);
 
 const quoteDiv = document.getElementById('quote')
 
+
+ // runs when the DOM loads
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
   const quote = document.getElementById('quote');
-
   async function updateQuote() {
-    // Fetch a random quote from the Quotable API
-    const response = await fetch("https://api.quotable.io/random?maxLength=50");
-    const data = await response.json();
-    if (response.ok) {
-      // Update DOM elements
-      quote.innerHTML ="\"" + data.content + "\"" + "&nbsp";
-    } else {
-      quote.innerHTML = "Mistakes are an opportunity to learn";
-      console.log(data);
+    try {
+      // Fetch a random quote from the Quotable API
+      const response = await fetch("https://api.quotable.io/random?maxLength=30");
+      const data = await response.json();
+        // Update DOM elements
+      quote.innerHTML = "\"" + data.content + "\"" + "&nbsp";
+    } catch (error) {
+      //Error catch
+      quote.innerHTML = "\"" + "Mistakes are an opportunity to learn" + "\"" + "&nbsp";
+      console.error(error);
     }
   }
-  // call updateQuote once when page loads
+  // Call updateQuote once when page loads
   updateQuote();
 });
 
-console.log("bil")
 // Function declarations
 
 

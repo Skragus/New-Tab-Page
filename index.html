@@ -8,12 +8,14 @@
 </head>
 <body>
   <main id="background" style="background-image: url(${})">
-    <div id = "C1"> <!-- C1 -->
-      <div><!-- R1 -->
-        <!--market prices -->
-      </div>
-      <div><!-- R2 -->
-        <!--notepad feature -->
+    <div id = "C1" class="drawer"> <!-- C1 -->
+      <div id = "C1drawer"  class="drawer-fade">
+        <div id = "markets"><!-- R1 -->
+          <!--market prices -->
+        </div>
+        <div id = "notepad"><!-- R2 -->
+          <!--notepad feature -->
+        </div>
       </div>
     </div>
     <div id="C2"><!-- C2 -->
@@ -27,16 +29,18 @@
 
         </div>
       </div>
-      <div id="quote">
+      <div id="quote" class="no-select">
           loading...
       </div>
     </div>
-    <div id = "C1"><!-- C3 -->
-      <div>
-        <!-- Date and weather -->
-      </div>
-      <div>
-        <!--bookmarking capabilities -->
+    <div id = "C3" class="drawer"> <!-- C3 -->
+      <div id = "C3drawer"  class="drawer-fade">
+        <div id = "weather">
+          <!-- Date and weather -->
+        </div>
+        <div id = "bookmarks">
+          <!--bookmarking capabilities -->
+        </div>
       </div>
     </div>
   </main>

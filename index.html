@@ -6,16 +6,33 @@
   <!-- Add any CSS stylesheets or external libraries here -->
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-server-no-reload> 
   <main id="background" style="background-image: url(${})">
     <div id = "C1" class="drawer"> <!-- C1 -->
       <div id = "C1drawer"  class="drawer-fade">
-        <div id = "markets"><!-- R1 -->
-          <!--market prices -->
+        <div id="markets"><!-- R1 -->
+          <div class="logo-container">
+            <img id="banklogo" class="market-logo" src="images/banklogo.png" alt="banklogo">
+          </div>
+          <div class="market-price" id="spyprice">$ ----</div>
+          <div class="logo-container">
+            <img id="teslalogo" class="market-logo" src="images/teslalogo.png" alt="teslalogo">
+          </div>
+          <div class="market-price"  id="tslaprice">$ ----</div>
+          <div class="logo-container">
+            <img id="btclogo" class="market-logo" src="images/btclogo.png" alt="btclogo">
+          </div>
+          <div class="market-price" id="btcprice">$ ----</div>
+          <div class="logo-container">
+            <img id="ethlogo" class="market-logo" src="images/ethlogo.png" alt="ethlogo">
+          </div>
+          <div class="market-price" id="ethprice">$ ----</div>
+          <div class="logo-container">
+            <img id="sollogo" class="market-logo" src="images/sollogo.png" alt="sollogo">
+          </div>
+          <div class="market-price" id="solprice">$ ----</div>
         </div>
-        <div id = "notepad"><!-- R2 -->
-          <!--notepad feature -->
-        </div>
+        <hr class="horizontal-line"> 
       </div>
     </div>
     <div id="C2"><!-- C2 -->

@@ -20,7 +20,7 @@ body {
   z-index: 0;
   background-size: 100% auto;
   background-repeat: no-repeat;
-  max-height: 80%;
+  max-height: 80%; 
 }
 
 #C2 {
@@ -97,24 +97,15 @@ main {
   white-space: nowrap;
 }
 
-#C1 {
-  grid-column: 1;
-  min-width: 20%;
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  z-index: 10;
-}
-
 #C3drawer,
 #C1drawer {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   opacity: 1;
-  z-index: 1;
+  z-index: 2;
 }
 
 #background.show-fade #C1drawer {
@@ -125,7 +116,8 @@ main {
   background: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0) 100%);
 }
 
-@media screen and (max-width: 110vh) {
+
+@media screen and (max-width: 110vh), (max-height: 550px) {
   #C1drawer,
   #C3drawer,
   .drawer-fade {
@@ -133,7 +125,6 @@ main {
     pointer-events: none;
   }
 }
-
 
 
 .drawer {
@@ -168,14 +159,74 @@ main {
   z-index: 10;
 }
 
-#bookmarks, 
-#weather, 
-#markets, 
-#notepad {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+#C1 {
+  display: flex;
+  flex-direction: column;
+  min-width: 20%;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  background: transparent;
 }
 
+#markets {
+  width: fit-content;
+  max-height: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px; /* adjust this as per your needs */
+  padding-left: 5%;
+  align-items: center;
+  justify-content: center;
+}
+
+.market-price {
+  font-family: 'Oswald', sans-serif;
+  color: #ffffff;
+  font-size: x-large;
+  min-width: max-content;
+  display: flex;
+  align-items: center;
+  overflow: visible; /* To prevent overflowing */
+  text-align: left;
+  justify-content: start;
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.market-logo {
+  max-height: 50px;
+  width: auto;
+}
+
+#banklogo{
+  padding-top: 10px;
+  transform: scale(0.7, 0.7);
+}
+
+#ethlogo{
+  transform: scale(0.9, 0.9);
+}
+#btclogo{
+  transform: scale(0.9, 0.9);
+}
+#teslalogo,
+#sollogo{
+  transform: scale(0.7, 0.7);
+}
+
+
+
+
+.horizontal-line {
+  position: relative;
+  border: none;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0) 100%);
+  margin-top: 10px;
+}

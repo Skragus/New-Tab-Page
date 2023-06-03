@@ -149,11 +149,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // Call updateQuote once when page loads
   updateQuote();
-}); 
-  
-const apiKey = "07NGR78GYWVQ0F5E"; // Replace with your marketstack API access key
-//SPY,TSLA,
+});
 
+// Fetch the SPY stock price from Alpha Vantage API
+const apiKey = "07NGR78GYWVQ0F5E";
 const spyUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=SPY&interval=5min&outputsize=compact&apikey=${apiKey}`;
 let spyElement = document.getElementById("spyprice");
 
@@ -165,16 +164,23 @@ fetch(spyUrl)
     return response.json();
   })
   .then((data) => {
-    let closePrice = data["Time Series (5min)"]["2023-06-01 19:55:00"]["4. close"];
+    let timeSeries = data["Time Series (5min)"];
+    let firstTimestampKey = Object.keys(timeSeries)[0];
+    let closePrice = timeSeries[firstTimestampKey]["4. close"];
     let SP500 = Math.ceil(parseInt(closePrice));
-    SP500 = SP500.toString() + '0';
-    spyElement.textContent = parseInt(SP500).toLocaleString('en-US', { style: 'currency', currency: 'USD',  maximumFractionDigits: 0 });
+    SP500 = SP500.toString() + "0";
+    spyElement.textContent = parseInt(SP500).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
   })
   .catch((error) => {
-    // Handle any errors that occurred during the fetch request
     console.error("Error:", error);
   });
 
+
+// Fetch the TSLA stock price from Alpha Vantage API
 const tslaUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&outputsize=compact&apikey=${apiKey}`;
 let tslaElement = document.getElementById("tslaprice");
 
@@ -186,44 +192,79 @@ fetch(tslaUrl)
     return response.json();
   })
   .then((data) => {
-    let closePrice = data["Time Series (5min)"]["2023-06-01 19:55:00"]["4. close"];
+    let timeSeries = data["Time Series (5min)"];
+    let firstTimestampKey = Object.keys(timeSeries)[0];
+    let closePrice = timeSeries[firstTimestampKey]["4. close"];
     let TSLA = Math.ceil(parseInt(closePrice));
-    tslaElement.textContent = TSLA.toLocaleString('en-US', { style: 'currency', currency: 'USD',  maximumFractionDigits: 0 });
+    tslaElement.textContent = TSLA.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
   })
   .catch((error) => {
-    // Handle any errors that occurred during the fetch request
     console.error("Error:", error);
   });
 
-  const API_BASE_URL = 'https://api.coingecko.com/api/v3';
-  let btcElement = document.getElementById("btcprice");
-  let ethElement = document.getElementById("ethprice");
-  let solElement = document.getElementById("solprice");
-  
-// Example: Get current Bitcoin price in USD
-fetch(`${API_BASE_URL}/simple/price?ids=bitcoin&vs_currencies=usd`)
-  .then(response => response.json())
-  .then(data => {
-    const BTC = data.bitcoin.usd;
-    btcElement.textContent = BTC.toLocaleString('en-US', { style: 'currency', currency: 'USD',  maximumFractionDigits: 0 });
-  })
-  .catch(error => console.error('Error:', error));
-fetch(`${API_BASE_URL}/simple/price?ids=ethereum&vs_currencies=usd`)
-  .then(response => response.json())
-  .then(data => {
-    const ETH = data.ethereum.usd;
-    ethElement.textContent = ETH.toLocaleString('en-US', { style: 'currency', currency: 'USD',  maximumFractionDigits: 0 });
-  })
-  .catch(error => console.error('Error:', error));
-fetch(`${API_BASE_URL}/simple/price?ids=solana&vs_currencies=usd`)
-  .then(response => response.json())
-  .then(data => {
-    const SOL = data.solana.usd;
-    solElement.textContent = SOL.toLocaleString('en-US', { style: 'currency', currency: 'USD',  maximumFractionDigits: 2 });
-  })
-  .catch(error => console.error('Error:', error));
-// Function declarations
 
+  // Fetching cryptocurrency prices
+const API_BASE_URL = "https://api.coingecko.com/api/v3";
+let btcElement = document.getElementById("btcprice");
+let ethElement = document.getElementById("ethprice");
+let solElement = document.getElementById("solprice");
+
+// Fetch Bitcoin price from CoinGecko API
+fetch(`${API_BASE_URL}/simple/price?ids=bitcoin&vs_currencies=usd`)
+  .then((response) => response.json())
+  .then((data) => {
+    const BTC = data.bitcoin.usd;
+    btcElement.textContent = BTC.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+  })
+  .catch((error) => console.error("Error:", error));
+
+// Fetch Ethereum price from CoinGecko API
+fetch(`${API_BASE_URL}/simple/price?ids=ethereum&vs_currencies=usd`)
+  .then((response) => response.json())
+  .then((data) => {
+    const ETH = data.ethereum.usd;
+    ethElement.textContent = ETH.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+  })
+  .catch((error) => console.error("Error:", error));
+
+// Fetch Solana price from CoinGecko API
+fetch(`${API_BASE_URL}/simple/price?ids=solana&vs_currencies=usd`)
+  .then((response) => response.json())
+  .then((data) => {
+    const SOL = data.solana.usd;
+    solElement.textContent = SOL.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 2,
+    });
+  })
+  .catch((error) => console.error("Error:", error));
+
+document.getElementById("searchForm").onsubmit = function () {
+  var searchInput = document.getElementById("search").value;
+
+  // Check if the input is a URL (simple version)
+  if (searchInput.indexOf(".") !== -1 && searchInput.indexOf(" ") === -1) {
+    // If it's a URL, redirect to it
+    if (!/^https?:\/\//i.test(searchInput)) {
+      searchInput = "http://" + searchInput;
+    }
+    window.location.href = searchInput;
+    return false; // Prevent form submission to Google
+  }
+};
 // Event listeners
 
 // Function invocations

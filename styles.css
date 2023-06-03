@@ -167,12 +167,14 @@ main {
 }
 
 #C3 {
-  grid-column: 3;
+  display: flex;
+  flex-direction: column;
   min-width: 20%;
   flex: 1;
   position: relative;
   overflow: hidden;
   z-index: 10;
+  background: transparent;
 }
 
 #C1 {
@@ -235,14 +237,77 @@ main {
   transform: scale(0.7, 0.7);
 }
 
-
-
+#leftline{
+  background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0) 100%);
+}
+#rightline{
+  background: linear-gradient(to left, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0) 100%);
+}
 
 .horizontal-line {
   position: relative;
   border: none;
   width: 100%;
   height: 2px;
-  background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0) 100%);
   margin-top: 10px;
+}
+
+#weather {
+  width: 100%;
+  font-family: 'Oswald', sans-serif;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide any overflow */
+}
+
+#date {
+  font-size: medium;
+  padding-top: 10px;
+  padding-left: 15%;
+  width: 100%;
+  text-align: center;
+
+}
+
+#temp {
+  padding-top: 15px;
+  font-size: xx-large;
+  padding-left: 15%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+#wind {
+  font-size: medium;
+  padding-left: 15%;
+  display: flex;
+  justify-content: center;
+  color: #ffffffa6;
+}
+
+#weathersymbol {
+  transform: scale(0.8);
+  padding-left: 15%;
+  display: flex;
+  justify-content: center;
+}
+
+#weatherdescription {
+  position: absolute;
+  top: 210px;
+  padding-left: 15%;
+  display: flex;
+  justify-content: center;
+}
+
+#feelslike {
+  color: #ffffffa6;
+  font-size: medium;
+  padding-top: 30px;
+  padding-left: 15%;
+  text-align: center;
+  white-space: nowrap; /* Prevent text from wrapping */
 }

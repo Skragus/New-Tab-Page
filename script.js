@@ -179,7 +179,6 @@ fetch(spyUrl)
     console.error("Error:", error);
   });
 
-
 // Fetch the TSLA stock price from Alpha Vantage API
 const tslaUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&outputsize=compact&apikey=${apiKey}`;
 let tslaElement = document.getElementById("tslaprice");
@@ -206,8 +205,7 @@ fetch(tslaUrl)
     console.error("Error:", error);
   });
 
-
-  // Fetching cryptocurrency prices
+// Fetching cryptocurrency prices
 const API_BASE_URL = "https://api.coingecko.com/api/v3";
 let btcElement = document.getElementById("btcprice");
 let ethElement = document.getElementById("ethprice");
@@ -265,9 +263,109 @@ document.getElementById("searchForm").onsubmit = function () {
     return false; // Prevent form submission to Google
   }
 };
-// Event listeners
 
-// Function invocations
+window.addEventListener("load", function () {
+  const div1 = document.querySelector("#markets");
+  const div2 = document.querySelector("#weather");
 
-// Other code and logic
-// ...
+  function matchHeight() {
+    const div1Height = div1.offsetHeight;
+    div2.style.height = div1Height + "px";
+  }
+  matchHeight();
+  window.addEventListener("resize", matchHeight);
+});
+
+const dateDiv = document.getElementById("date");
+const currentDate = new Date().toLocaleDateString("is-IS", {
+  weekday: "short",
+  day: "numeric",
+  month: "long",
+});
+
+dateDiv.textContent = currentDate;
+
+const weatherSymbols = {
+  'few clouds': 'weather-partly-cloudy.png',
+  'scattered clouds': 'weather-partly-cloudy.png',
+  'broken clouds': 'weather-overcast.png',
+  'overcast clouds': 'weather-overcast.png',
+  'clear sky': 'weather-sunny.png',
+  'fog': 'weather-overcast.png',
+  'mist': 'weather-overcast.png',
+  'heavy shower snow': 'weather-very-snowy.png',
+  'shower snow': 'weather-snowy.png',
+  'light shower snow': 'weather-snowy.png',
+  'rain and snow': 'weather-very-rainy.png',
+  'light rain and snow': 'weather-rainy.png',
+  'shower sleet': 'weather-very-rainy.png',
+  'light shower sleet': 'weather-rainy.png',
+  'sleet': 'weather-very-rainy.png',
+  'heavy snow': 'weather-very-snowy.png',
+  'snow': 'weather-snowy.png',
+  'light snow': 'weather-snowy.png',
+  'light rain': 'weather-rainy.png',
+  'moderate rain': 'weather-rainy.png',
+  'heavy intensity rain': 'weather-very-rainy.png',
+  'very heavy rain': 'weather-very-rainy.png',
+  'extreme rain': 'weather-very-rainy.png',
+  'freezing rain': 'weather-very-rainy.png',
+  'light intensity shower rain': 'weather-rainy.png',
+  'shower rain': 'weather-rainy.png',
+  'heavy intensity shower rain': 'weather-very-rainy.png',
+  'ragged shower rain': 'weather-very-rainy.png',
+  'light intensity drizzle': 'weather-rainy.png',
+  'drizzle': 'weather-rainy.png',
+  'heavy intensity drizzle': 'weather-very-rainy.png',
+  'light intensity drizzle rain': 'weather-rainy.png',
+  'drizzle rain': 'weather-rainy.png',
+  'heavy intensity drizzle rain': 'weather-very-rainy.png',
+  'shower rain and drizzle': 'weather-very-rainy.png',
+  'heavy shower rain and drizzle': 'weather-very-rainy.png',
+  'shower drizzle': 'weather-rainy.png',
+};
+
+const wlocation = "keflavik";
+const weatherUrl =
+  `https://api.openweathermap.org/data/2.5/weather?q=${wlocation}&appid=0aa0ea33dc5d5e38d219e9f44f5c30d1&units=metric`;
+
+fetch(weatherUrl)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    // Extract the desired values from the data
+    const main = data.weather[0].main;
+    const description = data.weather[0].description;
+    const temp = data.main.temp.toFixed(0);
+    const feelsLike = data.main.feels_like.toFixed(0);
+    const speed = data.wind.speed.toFixed(1);
+
+    //if description is over 20 char then use main
+    if (description.length > 20) {
+      description = main;
+    }
+
+    // Update the divs with the extracted data
+    document.getElementById("weatherdescription").textContent =
+      description.toUpperCase();
+
+    document.getElementById("temp").textContent = `${temp}°C`;
+    document.getElementById(
+      "feelslike"
+    ).textContent = `Feels like ${feelsLike}°C`;
+    document.getElementById("wind").textContent = `${speed}m/s`;
+
+    // Lookup the weather symbol and update image source
+    let symbol = weatherSymbols[description.toLowerCase()];
+    if (!symbol) {
+      symbol = 'weather-error-catch.png'; // Use error catch image if no mapping was found
+    }
+    document.getElementById('wsymbol').src = `images/${symbol}`;
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });

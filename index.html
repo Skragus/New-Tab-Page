@@ -10,7 +10,7 @@
   <main id="background" style="background-image: url(${})">
     <div id = "C1" class="drawer"> <!-- C1 -->
       <div id = "C1drawer"  class="drawer-fade">
-        <div id="markets"><!-- R1 -->
+        <div id="markets" class="no-select"><!-- R1 -->
           <div class="logo-container">
             <img id="banklogo" class="market-logo" src="images/banklogo.png" alt="banklogo">
           </div>
@@ -33,6 +33,14 @@
           <div class="market-price" id="solprice">$ ----</div>
         </div>
         <hr class="horizontal-line" id="leftline"> 
+        <div id="notesymbolcontainer">
+          <div id="notenote" class="no-select"> NOTEPAD </div>
+          <img id="notesymbol" class="no-select" src="images/notepad-icon.png" alt="">
+        </div>
+        <div id="notepad-container">
+          <textarea id="notepad"></textarea>
+        </div>
+        <div></div>
       </div>
     </div>
     <div id="C2"><!-- C2 -->
@@ -44,16 +52,18 @@
       <div id="timeContainer">
         <div id="timeDisplay" class="no-select"><!-- Time -->
         </div>
-        <div id="greetingMessage" class="no-select"><!-- Time and message -->
+        <div id="greetingMessage" class="no-select"><!-- message -->
         </div>
       </div>
-      <div id="quote" class="no-select">
-          loading...
+      <div id="quotecontainer">
+        <div id="quote" class="no-select">
+            loading...
+        </div>
       </div>
     </div>
     <div id = "C3" class="drawer"> <!-- C3 -->
       <div id = "C3drawer"  class="drawer-fade">
-        <div id = "weather">
+        <div id = "weather" class="no-select">
           <div id="date">
           </div>
           <div id="temp">
@@ -79,7 +89,6 @@
       </div>
     </div>
   </main>
-  <!-- Add any JavaScript files or scripts here -->
   <script src="script.js"></script>
 </body>
 </html>

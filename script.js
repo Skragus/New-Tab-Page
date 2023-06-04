@@ -250,6 +250,23 @@ fetch(`${API_BASE_URL}/simple/price?ids=solana&vs_currencies=usd`)
   })
   .catch((error) => console.error("Error:", error));
 
+const notepad = document.getElementById("notepad");
+const notepadContainer = document.getElementById("notepad-container");
+const notecache = localStorage.getItem("notecache");
+
+document.addEventListener("DOMContentLoaded", function() {
+  notepad.value = notecache
+});
+
+notepadContainer.addEventListener("click", function() {
+  notepad.focus();
+});
+notepad.addEventListener("input", function() {
+  const notepadContent = notepad.value;
+  localStorage.setItem("notecache", notepadContent);; // Display the content of the notepad
+});
+  
+  
 document.getElementById("searchForm").onsubmit = function () {
   var searchInput = document.getElementById("search").value;
 

@@ -10,18 +10,34 @@ Clock and greeting Message: The page includes a clock and the page greets the us
 
 Daily Quote: The page fetches a quote of the day from an external API and displays it prominently on the page. The quotes changes whenever the page is loaded, providing users with inspiration, motivation, or thought-provoking messages.
 
-
-Features yet to be Implemented
-
 Current Date: Display the current date alongside the clock to provide additional information to the user.
 
 Market Prices: Show live market prices for S&P500, TSLA, BTC and ETH
 Weather: Integrate a weather API to display the current weather conditions, temperature, and forecast for the user's location.
-Integrated Notepad: Provide a built-in notepad feature where users can jot down quick notes or reminders directly on the New Tab page.
+
+Notepad: Provide a built-in notepad feature where users can jot down quick notes or reminders directly on the New Tab page.
+
+Features yet to be Implemented
+
 Bookmarking Capabilities: Allow users to save and manage their bookmarks within the New Tab page for quick access to their favorite websites.
+
+Nitpicks that need fixing: 
+
+fix whitespace on right and bottom
+cache background for quicker loading
+use location data for weather
+add windy weather
+resize market symbols and notepad symbol for faster loading speed
+change notepad scroll bar
 
 
 APIs Used
 Bing Image API: Used to fetch daily background images.
 Quote of the Day API: Used to fetch the daily quote.
+OpenWeather API: Used to retrieve weather data.
+CoinGecko API: Used for cryptocurrency data.
+AlphaVantage API: Used for market data.
 
+Icons
+Weather symbols: Icons from icons8.com.
+Notepad symbol: Icon from cleanpng

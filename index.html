@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-server-no-reload> 
-  <main id="background" style="background-image: url(${})">
+  <main id="background">
     <div id = "C1" class="drawer"> <!-- C1 -->
       <div id = "C1drawer"  class="drawer-fade">
         <div id="markets" class="no-select"><!-- R1 -->
@@ -84,7 +84,13 @@
         </div>
         <hr class="horizontal-line" id="rightline"> 
         <div id = "bookmarks">
-          <!--bookmarking capabilities -->
+          <ul class="link-list">
+            <li><a href="https://github.com"><img src="images/github-mark-white.png" alt="?">Github</a></li>
+            <li><a href="https://developer.mozilla.org/"><img src="images/mdn.png" alt="?">MDN Docs</a></li>
+            <li><a href="https://stackoverflow.com/"><img src="images/stack.png" alt="?">Stack Overflow</a></li>
+            <li><a href="https://www.codewars.com/"> <img src="images/codewarswhite.png" alt="?">Codewars</a></li>
+            <li id="linkhome"><a href="#"><img src="images/coming-soon.png" alt="G">Landing page</a></li>
+          </ul>          
         </div>
       </div>
     </div>

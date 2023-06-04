@@ -386,3 +386,4 @@ fetch(weatherUrl)
   .catch((error) => {
     console.error("Error:", error);
   });
+

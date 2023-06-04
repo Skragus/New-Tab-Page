@@ -1,38 +1,43 @@
-// Global variables and constants
-
 const backgroundDiv = document.getElementById("background");
 
 // Function to fetch and set the background image
 const getBackground = () => {
-  const apiUrl =
-    "https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=zh-CN";
+  // Check if there's a cached image and it was fetched today
+  const cachedImage = localStorage.getItem('backgroundImage');
+  const cachedDate = localStorage.getItem('backgroundImageDate');
+  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-  fetch(apiUrl)
-    .then((response) => {
-      // Check if the response was successful
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to fetch background image.");
-      }
-    })
-    .then((json) => {
-      // Extract the image URL from the API response
-      const imageUrl = json.url;
-      // Set the background image URL and styling
-      backgroundDiv.style.backgroundImage = `url('${imageUrl}')`;
-      backgroundDiv.style.backgroundSize = "cover";
-      backgroundDiv.style.backgroundPosition = "center";
-      applyFadeInEffect();
-    })
-    .catch((error) => {
-      console.error(error);
-      // Set a fallback background image URL and styling
-      backgroundDiv.style.backgroundImage =
-        "url('https://wallpapercave.com/wp/wp3435425.jpg')";
-      backgroundDiv.style.backgroundSize = "cover";
-      applyFadeInEffect();
-    });
+  if (cachedImage && cachedDate === today) {
+    // Use the cached image
+    setBackgroundImage(cachedImage);
+    applyFadeInEffect();
+  } else {
+    // Fetch a new image
+    const apiUrl =
+      "https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=zh-CN";
+
+    fetch(apiUrl)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Failed to fetch background image.");
+        }
+      })
+      .then((json) => {
+        const imageUrl = json.url;
+        setBackgroundImage(imageUrl);
+        // Cache the image URL and the current date
+        localStorage.setItem('backgroundImage', imageUrl);
+        localStorage.setItem('backgroundImageDate', today);
+        applyFadeInEffect();
+      })
+      .catch((error) => {
+        console.error(error);
+        setBackgroundImage("https://wallpapercave.com/wp/wp3435425.jpg");
+        applyFadeInEffect();
+      });
+  }
 };
 
 const applyFadeInEffect = () => {
@@ -43,6 +48,12 @@ const applyFadeInEffect = () => {
   backgroundDiv.style.opacity = "1";
   const background = document.getElementById("background");
   background.classList.add("show-fade");
+};
+
+const setBackgroundImage = (imageUrl) => {
+  backgroundDiv.style.backgroundImage = `url('${imageUrl}')`;
+  backgroundDiv.style.backgroundSize = "cover";
+  backgroundDiv.style.backgroundPosition = "center";
 };
 
 // Call the function to fetch and set the initial background image
@@ -342,48 +353,120 @@ const weatherSymbols = {
   'shower drizzle': 'weather-rainy.png',
 };
 
-const wlocation = "keflavik";
-const weatherUrl =
-  `https://api.openweathermap.org/data/2.5/weather?q=${wlocation}&appid=0aa0ea33dc5d5e38d219e9f44f5c30d1&units=metric`;
+// Get user's location
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
 
-fetch(weatherUrl)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
+      // Use latitude and longitude to fetch weather data
+      const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=0aa0ea33dc5d5e38d219e9f44f5c30d1&units=metric`;
+
+      fetch(weatherUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Extract the desired values from the data
+          const main = data.weather[0].main;
+          let description = data.weather[0].description;
+          const temp = data.main.temp.toFixed(0);
+          const feelsLike = data.main.feels_like.toFixed(0);
+          const speed = data.wind.speed.toFixed(1);
+
+          // If description is over 20 characters, use main instead
+          if (description.length > 20) {
+            description = main;
+          }
+
+          // Update the divs with the extracted data
+          document.getElementById("weatherdescription").textContent =
+            description.toUpperCase();
+
+          document.getElementById("temp").textContent = `${temp}°C`;
+          document.getElementById(
+            "feelslike"
+          ).textContent = `Feels like ${feelsLike}°C`;
+          document.getElementById("wind").textContent = `${speed}m/s`;
+
+          // Lookup the weather symbol and update image source
+          let symbol = weatherSymbols[description.toLowerCase()];
+          if (!symbol) {
+            symbol = 'weather-error-catch.png'; // Use error catch image if no mapping was found
+          }
+          document.getElementById('wsymbol').src = `images/${symbol}`;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+    (error) => {
+      console.error("Error getting user's location:", error);
+      // Continue with default location (Keflavik)
+      const wlocation = "keflavik";
+      const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${wlocation}&appid=0aa0ea33dc5d5e38d219e9f44f5c30d1&units=metric`;
+      // Fetch weather data using default location
+      fetchWeatherData(weatherUrl);
     }
-    return response.json();
-  })
-  .then((data) => {
-    // Extract the desired values from the data
-    const main = data.weather[0].main;
-    const description = data.weather[0].description;
-    const temp = data.main.temp.toFixed(0);
-    const feelsLike = data.main.feels_like.toFixed(0);
-    const speed = data.wind.speed.toFixed(1);
+  );
+} else {
+  console.error("Geolocation is not supported by this browser");
+  // Continue with default location (Keflavik)
+  const wlocation = "keflavik";
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${wlocation}&appid=0aa0ea33dc5d5e38d219e9f44f5c30d1&units=metric`;
+  // Fetch weather data using default location
+  fetchWeatherData(weatherUrl);
+}
 
-    //if description is over 20 char then use main
-    if (description.length > 20) {
-      description = main;
-    }
+function fetchWeatherData(url) {
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Extract the desired values from the data
+      const main = data.weather[0].main;
+      let description = data.weather[0].description;
+      const temp = data.main.temp.toFixed(0);
+      const feelsLike = data.main.feels_like.toFixed(0);
+      const speed = data.wind.speed.toFixed(1);
 
-    // Update the divs with the extracted data
-    document.getElementById("weatherdescription").textContent =
-      description.toUpperCase();
+      // If description is over 20 characters, use main instead
+      if (description.length > 20) {
+        description = main;
+      }
 
-    document.getElementById("temp").textContent = `${temp}°C`;
-    document.getElementById(
-      "feelslike"
-    ).textContent = `Feels like ${feelsLike}°C`;
-    document.getElementById("wind").textContent = `${speed}m/s`;
+      // Update the divs with the extracted data
+      document.getElementById("weatherdescription").textContent =
+        description.toUpperCase();
 
-    // Lookup the weather symbol and update image source
-    let symbol = weatherSymbols[description.toLowerCase()];
-    if (!symbol) {
-      symbol = 'weather-error-catch.png'; // Use error catch image if no mapping was found
-    }
-    document.getElementById('wsymbol').src = `images/${symbol}`;
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
+      document.getElementById("temp").textContent = `${temp}°C`;
+      document.getElementById(
+        "feelslike"
+      ).textContent = `Feels like ${feelsLike}°C`;
+      document.getElementById("wind").textContent = `${speed}m/s`;
+
+      // Lookup the weather symbol and update image source
+      let symbol = weatherSymbols[description.toLowerCase()];
+
+      // conditional for the windy symbol
+      if ((main.toLowerCase() === "clouds" || main.toLowerCase() === "clear") && parseFloat(speed) > 14.9) {
+        symbol = "weather-windy.png";
+      }
+      if (!symbol) {
+        symbol = 'weather-error-catch.png'; // Use error catch image if no mapping was found
+      }
+      document.getElementById('wsymbol').src = `images/${symbol}`;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 

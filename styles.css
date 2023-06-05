@@ -37,11 +37,11 @@ body {
   width: 50%;
   padding: 2px;
   box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.065);
-  border: 2px solid #ffffff15;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid #ffffff45;
   border-radius: 10px;
   font-size: 18px;
-  color: #ffffff66;
+  color: #ffffff86;
   outline: none;
 }
 
